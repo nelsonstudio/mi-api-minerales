@@ -3,6 +3,7 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import os
+import urllib.request
 
 app = FastAPI(title="API Minerales IA")
 
@@ -10,18 +11,28 @@ app = FastAPI(title="API Minerales IA")
 # 🔥 CONFIGURACIÓN
 # =========================
 MODEL_PATH = "modelo_minerales.h5"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1FeMP_w-0ci5YCvE-9EFPniJTy8kfWfJ5"
 
-# Cambia según tus clases
 CLASES = ["galena", "pirita", "calcopirita"]
 
 # =========================
-# 🧠 CARGAR MODELO (solo 1 vez)
+# 📥 DESCARGAR MODELO
+# =========================
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Descargando modelo desde Drive...")
+        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+        print("Modelo descargado")
+
+# =========================
+# 🧠 CARGAR MODELO (1 sola vez)
 # =========================
 model = None
 
 def load_model():
     global model
     if model is None:
+        download_model()
         model = tf.keras.models.load_model(MODEL_PATH)
     return model
 
@@ -62,12 +73,10 @@ async def predict(file: UploadFile = File(...)):
         }
 
     except Exception as e:
-        return {
-            "error": str(e)
-        }
+        return {"error": str(e)}
 
 # =========================
-# 🚀 INICIO (Render compatible)
+# 🚀 INICIO (Render)
 # =========================
 if __name__ == "__main__":
     import uvicorn

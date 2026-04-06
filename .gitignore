@@ -1,0 +1,44 @@
+# =========================
+# 🐍 Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# 🌱 Entorno virtual
+# =========================
+venv/
+env/
+ENV/
+
+# =========================
+# 🔐 Variables de entorno
+# =========================
+.env
+
+# =========================
+# 📦 Archivos de sistema
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🧪 Testing / logs
+# =========================
+*.log
+pytest_cache/
+
+# =========================
+# 🧠 Modelos grandes (opcional)
+# =========================
+# Si tu modelo pesa mucho, descomenta:
+# modelo_minerales.h5
+
+# =========================
+# 🗂️ Archivos temporales
+# =========================
+*.tmp
+*.bak
+*.swp
